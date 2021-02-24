@@ -1,11 +1,13 @@
 import React, { ReactNode } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
-import Home from './pages/Home/Home'
-
 import { ThemeProvider } from '@material-ui/styles'
 import { createMuiTheme } from '@material-ui/core'
 import { green } from '@material-ui/core/colors'
+
+import Overview from './pages/Overview/Overview'
+import NavBar from './components/NavBar'
+import About from './pages/About/About'
 
 const theme = createMuiTheme({
     palette: {
@@ -31,8 +33,10 @@ function App() {
     return (
         <GlobalProviders>
             <Router>
+                <NavBar />
                 <Switch>
-                    <Route path='/' component={Home} />
+                    <Route exact path='/' component={Overview} />
+                    <Route exact path='/about' component={About} />
                 </Switch>
             </Router>
         </GlobalProviders>

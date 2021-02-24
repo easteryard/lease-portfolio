@@ -1,9 +1,20 @@
 import { useCallback, useEffect, useState } from 'react'
 import wretch from 'wretch'
 
-export default function useGetJson<T> (url: string, deps = [], shouldGet = true): [{} | T, boolean, any, () => void] {
-    const [res, setRes] = useState({
-        data: {},
+interface IResult<T> {
+    data?: T
+    loading: boolean
+    error: any
+}
+
+interface IResponse<T> {
+    response: IResult<T>
+    refresh: () => void
+}
+
+export default function useGetJson<T> (url: string, deps = [], shouldGet = true): IResponse<T> {
+    const [res, setRes] = useState<IResult<T>>({
+        data: undefined,
         loading: true,
         error: null
     })
@@ -11,13 +22,16 @@ export default function useGetJson<T> (url: string, deps = [], shouldGet = true)
     const get = useCallback(() => {
         wretch(url)
             .get()
-            .json(res => setRes({ data: res, loading: false, error: null }))
-            .catch(err => setRes({ data: {}, loading: false, error: err }))
+            .json(res => {
+                console.log('res: ', res)
+                setRes({ data: res as T, loading: false, error: null })
+            })
+            .catch(err => setRes({ loading: false, error: err }))
     }, [url])
 
     useEffect(() => {
         if (shouldGet) get()
     }, [get, shouldGet, ...deps])
 
-    return [res.data, res.loading, res.error, get]
+    return { response: res, refresh: get }
 }
