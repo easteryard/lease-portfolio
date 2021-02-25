@@ -2,32 +2,27 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import useGetJson from '../../hooks/useGetJson'
-import ReactTable from '../../components/Table/ReactTable'
+import { ILease, setPortfolio } from '../../utils/portfolioMethods'
+import { Typography } from '@material-ui/core'
+import MatLeasesTable from '../../components/MatLeasesTable'
 
 const useStyles = makeStyles(theme => ({
 
 }))
 
-interface ILease {
+interface ILeaseDanish {
+    id: string
     vejnavn: string
     husnr: string
     postnr: string
     postnrnavn: string
 }
 
-interface ITableData {
-    streetName: string
-    houseNumber: string
-    postNumber: string
-    postNumberName: string
-}
-
 function Overview () {
     const classes = useStyles()
     const [page, setPage] = useState(1)
-    const [tableData, setTableData] = useState<ITableData[]>([])
-
-    const { response: leases, refresh } = useGetJson<ILease[]>(`https://dawa.aws.dk/adgangsadresser?struktur=mini&side=${page}&per_side=3`)
+    const [tableData, setTableData] = useState<ILease[]>([])
+    const { response: leases, refresh } = useGetJson<ILeaseDanish[]>(`https://dawa.aws.dk/adgangsadresser?struktur=mini&side=${page}&per_side=3`)
     console.log('leases: ', leases)
 
     const columns = useMemo(() => [
@@ -52,6 +47,7 @@ function Overview () {
     useEffect(() => {
         if (leases.loading || !leases.data) return
         const data = leases?.data?.map(lease => ({
+            id: lease.id,
             streetName: lease.vejnavn,
             houseNumber: lease.husnr,
             postNumber: lease.postnr,
@@ -64,10 +60,15 @@ function Overview () {
         setPage(newPage)
     }
 
+    function addToPortfolio (lease: ILease) {
+        console.log('me: ', lease)
+        // setPortfolio(lease)
+    }
+
     return (
         <>
-            <p>Hello</p>
-            <ReactTable columns={columns} data={tableData} />
+            <Typography variant='h3'>Overview</Typography>
+            <MatLeasesTable data={tableData} rowAction={addToPortfolio} />
         </>
     )
 }

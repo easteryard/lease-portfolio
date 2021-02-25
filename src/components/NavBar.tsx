@@ -22,7 +22,7 @@ function NavBar () {
         <AppBar position='sticky' className={classes.appBar}>
             <Toolbar>
                 <Button onClick={() => handleRedirect('/')}>Overview</Button>
-                <Button onClick={() => handleRedirect('/leases')}>Find leases</Button>
+                <Button onClick={() => handleRedirect('/portfolio')}>Portfolio</Button>
                 <Button onClick={() => handleRedirect('/about')}>About</Button>
             </Toolbar>
         </AppBar>

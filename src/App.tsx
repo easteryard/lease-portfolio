@@ -8,6 +8,7 @@ import { green } from '@material-ui/core/colors'
 import Overview from './pages/Overview/Overview'
 import NavBar from './components/NavBar'
 import About from './pages/About/About'
+import Portfolio from './pages/Portfolio/Portfolio'
 
 const theme = createMuiTheme({
     palette: {
@@ -36,6 +37,7 @@ function App() {
                 <NavBar />
                 <Switch>
                     <Route exact path='/' component={Overview} />
+                    <Route exact path='/portfolio' component={Portfolio} />
                     <Route exact path='/about' component={About} />
                 </Switch>
             </Router>
