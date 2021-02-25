@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import useGetJson from '../../hooks/useGetJson'
-import { ILease, setPortfolio } from '../../utils/portfolioMethods'
+import { getPortfolio, ILease, setPortfolio } from '../../utils/portfolioMethods'
 import { Typography } from '@material-ui/core'
 import LeasesTable from '../../components/LeasesTable'
 
@@ -61,8 +61,7 @@ function Overview () {
     }
 
     function addToPortfolio (lease: ILease) {
-        console.log('me: ', lease)
-        // setPortfolio(lease)
+        setPortfolio(lease)
     }
 
     return (

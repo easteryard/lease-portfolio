@@ -6,13 +6,22 @@ export interface ILease {
     postNumberName: string
 }
 
-export function setPortfolio (portfolio: ILease) {
-    const portfolioString = JSON.stringify(portfolio)
-    localStorage.setItem('portfolio', portfolioString)
+export function setPortfolio (lease: ILease) {
+    const currentPortfolio = getPortfolio()
+    if (isLeaseInPortfolio(lease)) return
+
+    currentPortfolio.push(lease)
+    const portfolioString = JSON.stringify(currentPortfolio)
+    localStorage.setItem('leasePortfolio', portfolioString)
 }
 
 export function getPortfolio (): ILease[] {
-    const portfolio = localStorage.getItem('portfolio')
+    const portfolio = localStorage.getItem('leasePortfolio')
     if (!portfolio) return []
     return JSON.parse(portfolio)
+}
+
+export function isLeaseInPortfolio (leaseToCheck: ILease) {
+    const currentPortfolio = getPortfolio()
+    return currentPortfolio.some(leaseInPortfolio => leaseInPortfolio.id === leaseToCheck.id)
 }
