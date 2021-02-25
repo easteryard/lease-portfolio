@@ -1,41 +1,39 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
-import ReactTable from './ReactTable'
-import { Button } from '@material-ui/core'
-import { CellProps } from 'react-table'
+import TableTemplate from './TableTemplate'
+import { Button, TableBody, TableCell, TableRow } from '@material-ui/core'
+import { ILease } from '../utils/portfolioMethods'
 
-interface IProps<T> {
-    data: T[]
-    rowAction: (prop: T) => void
+interface IProps {
+    data: ILease[]
+    rowAction: (props: ILease) => void
 }
 
-function LeasesTable<T extends object> ({ data, rowAction }: IProps<T>) {
-    const columns = useMemo(() => [
-        {
-            Header: 'Vejnavn',
-            accessor: 'streetName'
-        },
-        {
-            Header: 'Husnr.',
-            accessor: 'houseNumber'
-        },
-        {
-            Header: 'Postnr.',
-            accessor: 'postNumber'
-        },
-        {
-            Header: 'Postnummernavn',
-            accessor: 'postNumberName'
-        },
-        {
-            Header: 'Action',
-            accessor: 'action',
-            Cell: (row: CellProps<T>) => <Button onClick={() => rowAction(row.row.original)}>Add mee</Button>
-        }
-    ], [])
+export default function LeasesTable ({ data, rowAction }: IProps) {
 
-    return <></>
-    // return <ReactTable columns={columns} data={data} />
+    const columns = [
+        'Vejnavn',
+        'Husnr.',
+        'Postnr.',
+        'Postnummernavn',
+        'Handling'
+    ]
+
+    const tableBody = (
+        <TableBody>
+            {data.map(row => (
+                <TableRow key={row.id}>
+                    <TableCell>{row.streetName}</TableCell>
+                    <TableCell>{row.houseNumber}</TableCell>
+                    <TableCell>{row.postNumber}</TableCell>
+                    <TableCell>{row.postNumberName}</TableCell>
+                    <TableCell>
+                        <Button onClick={() => rowAction(row)} variant='outlined' color='primary'>Tilføj</Button>
+                    </TableCell>
+                </TableRow>
+            ))}
+        </TableBody>
+    )
+
+    return <TableTemplate columns={columns} body={tableBody} />
 }
-
-export default LeasesTable

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import useGetJson from '../../hooks/useGetJson'
 import { ILease, setPortfolio } from '../../utils/portfolioMethods'
 import { Typography } from '@material-ui/core'
-import MatLeasesTable from '../../components/MatLeasesTable'
+import LeasesTable from '../../components/LeasesTable'
 
 const useStyles = makeStyles(theme => ({
 
@@ -68,7 +68,7 @@ function Overview () {
     return (
         <>
             <Typography variant='h3'>Overview</Typography>
-            <MatLeasesTable data={tableData} rowAction={addToPortfolio} />
+            <LeasesTable data={tableData} rowAction={addToPortfolio} />
         </>
     )
 }

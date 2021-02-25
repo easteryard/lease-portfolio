@@ -3,7 +3,6 @@ import React, { useEffect, useMemo } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import useGetPortfolio from '../../hooks/useGetPortfolio'
 import { Typography } from '@material-ui/core'
-import LeasesTable from '../../components/LeasesTable'
 
 const useStyles = makeStyles(theme => ({
 
@@ -40,7 +39,6 @@ function Portfolio ({  }: IProps) {
     return (
         <>
             <Typography variant='h3'>Portfolio</Typography>
-            {/*<LeasesTable data={portfolio} />*/}
         </>
     )
 }
