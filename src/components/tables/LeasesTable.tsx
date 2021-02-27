@@ -22,7 +22,8 @@ interface IProps {
     isExpandable?: boolean
 }
 
-export default function LeasesTable ({ data, rowAction, actionText, isActionDisabled, page, handleChangePage, isExpandable }: IProps) {
+export default function LeasesTable ({ data, rowAction, actionText, isActionDisabled, page, handleChangePage,
+                                         isExpandable }: IProps) {
     const classes = useStyles()
 
     const columns = [

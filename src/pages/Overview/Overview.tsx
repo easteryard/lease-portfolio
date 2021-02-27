@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
 import useGetJson from '../../hooks/useGetJson'
 import { Typography } from '@material-ui/core'
 import LeasesTable from '../../components/tables/LeasesTable'
@@ -8,10 +7,6 @@ import usePortfolio from '../../hooks/usePortfolio'
 import { ILease } from '../../components/provider/PortfolioProvider'
 import SearchFields, { ISearchObj } from './components/SearchFields'
 import ConditionalRender from '../../components/ConditionalRender'
-
-const useStyles = makeStyles(theme => ({
-
-}))
 
 interface ILeaseDanish {
     id: string
@@ -24,7 +19,6 @@ interface ILeaseDanish {
 }
 
 function Overview () {
-    const classes = useStyles()
     const { addToPortfolio, isLeaseInPortfolio } = usePortfolio()
     const [page, setPage] = useState(1)
     const [query, setQuery] = useState('')

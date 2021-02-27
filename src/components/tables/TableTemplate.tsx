@@ -1,15 +1,6 @@
 import React, { ReactNode } from 'react'
 
-import { makeStyles } from '@material-ui/core/styles'
-import {
-    Paper, Table, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow
-} from '@material-ui/core'
-
-const useStyles = makeStyles(() => ({
-    headerCell: {
-        fontWeight: 'bold'
-    }
-}))
+import { Paper, Table, TableContainer, TableFooter, TablePagination, TableRow } from '@material-ui/core'
 
 interface IProps {
     header: ReactNode
@@ -19,8 +10,6 @@ interface IProps {
 }
 
 export default function TableTemplate ({ header, body, page, handleChangePage }: IProps) {
-    const classes = useStyles()
-
     function renderFooter () {
         return (
             <>

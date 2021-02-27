@@ -31,7 +31,9 @@ const storage = localStorage
 
 export default function PortfolioProvider ({ children }: IProps) {
     const portfolioFromStorage = localStorage.getItem(storageKey)
-    const [portfolio, setPortfolio] = useState<ILease[]>(portfolioFromStorage ? JSON.parse(portfolioFromStorage) : [])
+    const [portfolio, setPortfolio] = useState<ILease[]>(
+        portfolioFromStorage ? JSON.parse(portfolioFromStorage) : []
+    )
 
     function setPortfolioState (portfolio: ILease[]) {
         storage.setItem(storageKey, JSON.stringify(portfolio))

@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     searchGrid: {
         marginTop: theme.spacing(1)
     },
-    clearSearch: {
+    clearSearchButton: {
         marginLeft: theme.spacing(1)
     }
 }))
@@ -72,7 +72,7 @@ export default function SearchFields ({ onSearch, clearSearch }: IProps) {
                 </Grid>
                 <Grid container className={classes.searchGrid}>
                     <Button type='submit' variant='contained' color='primary'>Søg</Button>
-                    <Button onClick={handleClearSearch} variant='outlined' color='primary' className={classes.clearSearch}>
+                    <Button onClick={handleClearSearch} variant='outlined' color='primary' className={classes.clearSearchButton}>
                         Nulstil
                     </Button>
                 </Grid>

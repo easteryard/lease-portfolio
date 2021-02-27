@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
-import { Button, Collapse, Grid, IconButton, TableCell, TableRow, TextField } from '@material-ui/core'
+import { Button, Collapse, Grid, IconButton, TableCell, TableRow } from '@material-ui/core'
 import { ILease } from '../provider/PortfolioProvider'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
 import LeaseDetails from './LeaseDetails'
 import clsx from 'clsx'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
     originalRow: {
         '& > *': {
             borderBottom: 'unset'
         }
     },
-    collapsibleRow: {
+    collapsibleCell: {
         paddingTop: 0,
         paddingBottom: 0
     }
@@ -59,7 +59,7 @@ export default function LeasesRow ({ lease, rowAction, actionText, isActionDisab
             </TableRow>
             {isExpandable && (
                 <TableRow>
-                    <TableCell colSpan={8} className={classes.collapsibleRow}>
+                    <TableCell colSpan={8} className={classes.collapsibleCell}>
                         <Collapse in={isOpen} timeout='auto' unmountOnExit>
                             <Grid>
                                 <LeaseDetails lease={lease} />
