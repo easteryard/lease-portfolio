@@ -2,33 +2,46 @@ import React from 'react'
 
 import TableTemplate from './TableTemplate'
 import { Button, TableBody, TableCell, TableRow } from '@material-ui/core'
-import { ILease } from '../utils/portfolioMethods'
+import usePortfolio from '../hooks/usePortfolio'
+import { ILease } from './provider/PortfolioProvider'
 
 interface IProps {
     data: ILease[]
-    rowAction: (props: ILease) => void
+    rowAction: (lease: ILease) => void
+    actionText: string
+    isActionDisabled?: (lease: ILease) => boolean
 }
 
-export default function LeasesTable ({ data, rowAction }: IProps) {
+export default function LeasesTable ({ data, rowAction, actionText, isActionDisabled }: IProps) {
+    const { isLeaseInPortfolio } = usePortfolio()
 
     const columns = [
         'Vejnavn',
         'Husnr.',
         'Postnr.',
         'Postnummernavn',
-        'Handling'
+        ''
     ]
+
+    function isInPortfolio (id: string) {
+        return isLeaseInPortfolio(id)
+    }
 
     const tableBody = (
         <TableBody>
-            {data.map(row => (
-                <TableRow key={row.id}>
-                    <TableCell>{row.streetName}</TableCell>
-                    <TableCell>{row.houseNumber}</TableCell>
-                    <TableCell>{row.postNumber}</TableCell>
-                    <TableCell>{row.postNumberName}</TableCell>
-                    <TableCell>
-                        <Button onClick={() => rowAction(row)} variant='outlined' color='primary'>Tilføj</Button>
+            {data.map(lease => (
+                <TableRow key={lease.id}>
+                    <TableCell>{lease.streetName}</TableCell>
+                    <TableCell>{lease.houseNumber}</TableCell>
+                    <TableCell>{lease.postNumber}</TableCell>
+                    <TableCell>{lease.postNumberName}</TableCell>
+                    <TableCell align='right' colSpan={7}>
+                        <Button onClick={() => rowAction(lease)}
+                                disabled={isActionDisabled ? isActionDisabled(lease) : false}
+                                variant='outlined' color='primary'
+                        >
+                            {actionText}
+                        </Button>
                     </TableCell>
                 </TableRow>
             ))}

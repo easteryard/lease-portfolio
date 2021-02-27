@@ -9,6 +9,7 @@ import Overview from './pages/Overview/Overview'
 import NavBar from './components/NavBar'
 import About from './pages/About/About'
 import Portfolio from './pages/Portfolio/Portfolio'
+import PortfolioProvider from './components/provider/PortfolioProvider'
 
 const theme = createMuiTheme({
     palette: {
@@ -25,7 +26,9 @@ interface IGlobalProviders {
 function GlobalProviders ({ children }: IGlobalProviders) {
     return (
         <ThemeProvider theme={theme}>
-            {children}
+            <PortfolioProvider>
+                {children}
+            </PortfolioProvider>
         </ThemeProvider>
     )
 }

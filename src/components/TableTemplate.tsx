@@ -3,8 +3,10 @@ import React, { ReactNode } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Table, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
-
+const useStyles = makeStyles(() => ({
+    headerCell: {
+        fontWeight: 'bold'
+    }
 }))
 
 interface IProps {
@@ -20,7 +22,7 @@ export default function TableTemplate ({ columns, body }: IProps) {
             <Table>
                 <TableHead>
                     <TableRow>
-                        {columns.map(column => <TableCell key={column}>{column}</TableCell>)}
+                        {columns.map(column => <TableCell key={column} className={classes.headerCell}>{column}</TableCell>)}
                     </TableRow>
                 </TableHead>
                 {body}

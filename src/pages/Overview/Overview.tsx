@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import useGetJson from '../../hooks/useGetJson'
-import { getPortfolio, ILease, setPortfolio } from '../../utils/portfolioMethods'
 import { Typography } from '@material-ui/core'
 import LeasesTable from '../../components/LeasesTable'
+import usePortfolio from '../../hooks/usePortfolio'
+import { ILease } from '../../components/provider/PortfolioProvider'
 
 const useStyles = makeStyles(theme => ({
 
@@ -20,29 +21,10 @@ interface ILeaseDanish {
 
 function Overview () {
     const classes = useStyles()
+    const { addToPortfolio, isLeaseInPortfolio } = usePortfolio()
     const [page, setPage] = useState(1)
     const [tableData, setTableData] = useState<ILease[]>([])
-    const { response: leases, refresh } = useGetJson<ILeaseDanish[]>(`https://dawa.aws.dk/adgangsadresser?struktur=mini&side=${page}&per_side=3`)
-    console.log('leases: ', leases)
-
-    const columns = useMemo(() => [
-        {
-            Header: 'Vejnavn',
-            accessor: 'streetName'
-        },
-        {
-            Header: 'Husnr.',
-            accessor: 'houseNumber'
-        },
-        {
-            Header: 'Postnr.',
-            accessor: 'postNumber'
-        },
-        {
-            Header: 'Postnummernavn',
-            accessor: 'postNumberName'
-        }
-    ], [])
+    const { response: leases } = useGetJson<ILeaseDanish[]>(`https://dawa.aws.dk/adgangsadresser?struktur=mini&side=${page}&per_side=5`)
 
     useEffect(() => {
         if (leases.loading || !leases.data) return
@@ -60,14 +42,19 @@ function Overview () {
         setPage(newPage)
     }
 
-    function addToPortfolio (lease: ILease) {
-        setPortfolio(lease)
+    function handleAddToPortfolio (lease: ILease) {
+        addToPortfolio(lease)
+    }
+
+    function isInPortfolio (lease: ILease) {
+        return isLeaseInPortfolio(lease.id)
     }
 
     return (
         <>
             <Typography variant='h3'>Overview</Typography>
-            <LeasesTable data={tableData} rowAction={addToPortfolio} />
+            <LeasesTable data={tableData} rowAction={handleAddToPortfolio} actionText='Tilføj til portfolio'
+                         isActionDisabled={isInPortfolio} />
         </>
     )
 }

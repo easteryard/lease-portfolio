@@ -22,10 +22,7 @@ export default function useGetJson<T> (url: string, deps = [], shouldGet = true)
     const get = useCallback(() => {
         wretch(url)
             .get()
-            .json(res => {
-                console.log('res: ', res)
-                setRes({ data: res as T, loading: false, error: null })
-            })
+            .json(res => setRes({ data: res as T, loading: false, error: null }))
             .catch(err => setRes({ loading: false, error: err }))
     }, [url])
 
