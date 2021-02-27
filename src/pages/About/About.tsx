@@ -38,7 +38,7 @@ function About () {
                         <li><Typography>Add leases to your portfolio.</Typography></li>
                         <li><Typography>See your portfolio.</Typography></li>
                         <li><Typography>Remove leases from your portfolio.</Typography></li>
-                        <li><Typography>Add details to your leases in your portfolio.</Typography></li>
+                        <li><Typography>Add details to leases in your portfolio.</Typography></li>
                     </ul>
                     <Divider className={classes.divider} />
                     <Typography>To see the source code go to:</Typography>
