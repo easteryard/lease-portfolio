@@ -17,6 +17,8 @@ interface ILeaseDanish {
     id: string
     vejnavn: string
     husnr: string
+    etage: string
+    dør: string
     postnr: string
     postnrnavn: string
 }
@@ -34,6 +36,8 @@ function Overview () {
         const data = leasesData?.data?.map(lease => ({
             id: lease.id,
             streetName: lease.vejnavn,
+            floor: lease.etage,
+            door: lease.dør,
             houseNumber: lease.husnr,
             postNumber: lease.postnr,
             postNumberName: lease.postnrnavn

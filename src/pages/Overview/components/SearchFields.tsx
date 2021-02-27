@@ -8,7 +8,7 @@ const useStyles = makeStyles(theme => ({
         marginBottom: theme.spacing(3),
         padding: theme.spacing(1)
     },
-    textField: {
+    textFieldMargin: {
         marginRight: theme.spacing(1)
     },
     searchGrid: {
@@ -60,13 +60,13 @@ export default function SearchFields ({ onSearch, clearSearch }: IProps) {
                 <Grid container>
                     <TextField label='Vejnavn' value={searchObj.streetName}
                                onChange={e => handleChange('streetName', e.target.value)} variant='outlined'
-                               className={classes.textField} />
+                               className={classes.textFieldMargin} />
                     <TextField label='Husnr.' value={searchObj.houseNumber}
                                onChange={e => handleChange('houseNumber', e.target.value)} variant='outlined'
-                               className={classes.textField} />
+                               className={classes.textFieldMargin} />
                     <TextField label='Postnr.' value={searchObj.postNumber}
                                onChange={e => handleChange('postNumber', e.target.value)} variant='outlined'
-                               className={classes.textField} />
+                               className={classes.textFieldMargin} />
                     <TextField label='Postnummernavn' value={searchObj.postNumberName}
                                onChange={e => handleChange('postNumberName', e.target.value)} variant='outlined' />
                 </Grid>

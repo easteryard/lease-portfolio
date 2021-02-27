@@ -25,7 +25,7 @@ function Portfolio ({  }: IProps) {
     return (
         <>
             <Typography variant='h3'>Portfolio</Typography>
-            <LeasesTable data={portfolio} rowAction={handleRemove} actionText='Fjern fra portfolio' />
+            <LeasesTable data={portfolio} rowAction={handleRemove} actionText='Fjern fra portfolio' isExpandable />
         </>
     )
 }

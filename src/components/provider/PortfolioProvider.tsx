@@ -4,12 +4,20 @@ interface IProps {
     children: ReactNode
 }
 
+export interface ILeaseDetails {
+    size?: string
+    noOfRooms?: number
+}
+
 export interface ILease {
     id: string
     streetName: string
+    floor: string
+    door: string
     houseNumber: string
     postNumber: string
     postNumberName: string
+    details?: ILeaseDetails
 }
 
 export interface IPortfolioContext {

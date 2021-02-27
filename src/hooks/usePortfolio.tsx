@@ -1,11 +1,12 @@
 import { useContext } from 'react'
 
-import { ILease, IPortfolioContext, PortfolioContext } from '../components/provider/PortfolioProvider'
+import { ILease, ILeaseDetails, IPortfolioContext, PortfolioContext } from '../components/provider/PortfolioProvider'
 
 interface IUsePortfolio {
     portfolio: ILease[]
     addToPortfolio: (lease: ILease) => void
     removeFromPortfolio: (id: string) => void
+    addDetails: (lease: ILease, details: ILeaseDetails) => void
     isLeaseInPortfolio: (id: string) => boolean
 }
 
@@ -22,9 +23,16 @@ export default function usePortfolio (): IUsePortfolio {
         setPortfolioState(filteredPortfolio)
     }
 
+    function addDetails (lease: ILease, details: ILeaseDetails) {
+        const portfolioCopy = [...portfolio]
+        const leaseIndex = portfolioCopy.findIndex(portfolioLease => portfolioLease.id === lease.id)
+        portfolioCopy[leaseIndex] = { ...lease, details}
+        setPortfolioState(portfolioCopy)
+    }
+
     function isLeaseInPortfolio (id: string) {
         return portfolio.some(leaseInPortfolio => leaseInPortfolio.id === id)
     }
 
-    return { portfolio, addToPortfolio, removeFromPortfolio, isLeaseInPortfolio }
+    return { portfolio, addToPortfolio, removeFromPortfolio, addDetails, isLeaseInPortfolio }
 }

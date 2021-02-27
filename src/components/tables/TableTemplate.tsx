@@ -12,19 +12,19 @@ const useStyles = makeStyles(() => ({
 }))
 
 interface IProps {
-    columns: string[]
+    header: ReactNode
     body: ReactNode
     page?: number
     handleChangePage?: (page: number) => void
 }
 
-export default function TableTemplate ({ columns, body, page, handleChangePage }: IProps) {
+export default function TableTemplate ({ header, body, page, handleChangePage }: IProps) {
     const classes = useStyles()
 
     function renderFooter () {
         return (
             <>
-                {(typeof page === 'number' && handleChangePage) ? (
+                {(typeof page === 'number' && handleChangePage) && (
                     <TableFooter>
                         <TableRow>
                             <TablePagination count={-1} page={page} onChangePage={(event, page) => handleChangePage(page)}
@@ -32,7 +32,7 @@ export default function TableTemplate ({ columns, body, page, handleChangePage }
                                              labelDisplayedRows={({ from, to }) => `${from} - ${to}`} />
                         </TableRow>
                     </TableFooter>
-                ) : null}
+                )}
             </>
         )
     }
@@ -41,11 +41,7 @@ export default function TableTemplate ({ columns, body, page, handleChangePage }
         <>
             <TableContainer component={Paper}>
                 <Table>
-                    <TableHead>
-                        <TableRow>
-                            {columns.map(column => <TableCell key={column} className={classes.headerCell}>{column}</TableCell>)}
-                        </TableRow>
-                    </TableHead>
+                    {header}
                     {body}
                     {renderFooter()}
                 </Table>
