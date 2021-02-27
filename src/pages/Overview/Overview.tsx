@@ -3,9 +3,11 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import useGetJson from '../../hooks/useGetJson'
 import { Typography } from '@material-ui/core'
-import LeasesTable from '../../components/LeasesTable'
+import LeasesTable from '../../components/tables/LeasesTable'
 import usePortfolio from '../../hooks/usePortfolio'
 import { ILease } from '../../components/provider/PortfolioProvider'
+import SearchFields, { ISearchObj } from './components/SearchFields'
+import ConditionalRender from '../../components/ConditionalRender'
 
 const useStyles = makeStyles(theme => ({
 
@@ -23,23 +25,24 @@ function Overview () {
     const classes = useStyles()
     const { addToPortfolio, isLeaseInPortfolio } = usePortfolio()
     const [page, setPage] = useState(1)
-    const [tableData, setTableData] = useState<ILease[]>([])
-    const { response: leases } = useGetJson<ILeaseDanish[]>(`https://dawa.aws.dk/adgangsadresser?struktur=mini&side=${page}&per_side=5`)
+    const [query, setQuery] = useState('')
+    const [leasesTableData, setLeasesTableData] = useState<ILease[]>([])
+    const { response: leasesData } = useGetJson<ILeaseDanish[]>(`https://dawa.aws.dk/adresser?struktur=mini&side=${page}&per_side=10${query}`)
 
     useEffect(() => {
-        if (leases.loading || !leases.data) return
-        const data = leases?.data?.map(lease => ({
+        if (leasesData.loading || !leasesData.data) return
+        const data = leasesData?.data?.map(lease => ({
             id: lease.id,
             streetName: lease.vejnavn,
             houseNumber: lease.husnr,
             postNumber: lease.postnr,
             postNumberName: lease.postnrnavn
         }))
-        setTableData(data)
-    }, [leases.data, leases.loading])
+        setLeasesTableData(data)
+    }, [leasesData.data, leasesData.loading])
 
     function handlePage (newPage: number) {
-        setPage(newPage)
+        setPage(newPage + 1)
     }
 
     function handleAddToPortfolio (lease: ILease) {
@@ -50,11 +53,29 @@ function Overview () {
         return isLeaseInPortfolio(lease.id)
     }
 
+    function handleSearch (searchObj: ISearchObj) {
+        let searchString = ''
+        if (searchObj.streetName) searchString += `&vejnavn=${searchObj.streetName}`
+        if (searchObj.houseNumber) searchString += `&husnr=${searchObj.houseNumber}`
+        if (searchObj.postNumber) searchString += `&postnr=${searchObj.postNumber}`
+        if (searchObj.postNumberName) searchString += `&postnrnavn=${searchObj.postNumberName}`
+        setQuery(searchString)
+    }
+
+    function clearQuery () {
+        setQuery('')
+    }
+
     return (
         <>
             <Typography variant='h3'>Overview</Typography>
-            <LeasesTable data={tableData} rowAction={handleAddToPortfolio} actionText='Tilføj til portfolio'
-                         isActionDisabled={isInPortfolio} />
+            <SearchFields onSearch={handleSearch} clearSearch={clearQuery} />
+            <ConditionalRender dataArray={[leasesTableData]} loadingArray={[leasesData.loading]} errorArray={[leasesData.error]} errorMessage='Der opstod en fejl'>
+                {([leases]: ILease[][]) => (
+                    <LeasesTable data={leases} rowAction={handleAddToPortfolio} actionText='Tilføj til portfolio'
+                                 isActionDisabled={isInPortfolio} page={page - 1} handleChangePage={handlePage} />
+                )}
+            </ConditionalRender>
         </>
     )
 }

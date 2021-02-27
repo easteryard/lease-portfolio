@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo } from 'react'
+import React from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Typography } from '@material-ui/core'
-import LeasesTable from '../../components/LeasesTable'
+import LeasesTable from '../../components/tables/LeasesTable'
 import { ILease } from '../../components/provider/PortfolioProvider'
 import usePortfolio from '../../hooks/usePortfolio'
 
@@ -17,25 +17,6 @@ interface IProps {
 function Portfolio ({  }: IProps) {
     const classes = useStyles()
     const { portfolio, removeFromPortfolio } = usePortfolio()
-
-    const columns = useMemo(() => [
-        {
-            Header: 'Vejnavn',
-            accessor: 'streetName'
-        },
-        {
-            Header: 'Husnr.',
-            accessor: 'houseNumber'
-        },
-        {
-            Header: 'Postnr.',
-            accessor: 'postNumber'
-        },
-        {
-            Header: 'Postnummernavn',
-            accessor: 'postNumberName'
-        }
-    ], [])
 
     function handleRemove (lease: ILease) {
         removeFromPortfolio(lease.id)
