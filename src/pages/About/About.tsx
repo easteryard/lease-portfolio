@@ -33,9 +33,12 @@ function About () {
                     <Divider className={classes.divider} />
                     <Typography>Lease portfolio management made easy:</Typography>
                     <ul className={classes.unsortedList}>
+                        <li><Typography>See an overview of apartments.</Typography></li>
+                        <li><Typography>Search for apartments as you wish.</Typography></li>
+                        <li><Typography>Add leases to your portfolio.</Typography></li>
                         <li><Typography>See an overview of your portfolio.</Typography></li>
-                        <li><Typography>Add or remove leases to your portfolio.</Typography></li>
-                        <li><Typography>Browse leases as you wish.</Typography></li>
+                        <li><Typography>Remove leases from your portfolio.</Typography></li>
+                        <li><Typography>Add details to your leases in your portfolio.</Typography></li>
                     </ul>
                     <Divider className={classes.divider} />
                     <Typography>To see the source code go to:</Typography>
